@@ -37,15 +37,17 @@ RUN sed -i -e 's/^bind-address/#bind-address/' /etc/mysql/my.cnf
 RUN apt-get -y install apache2 libapache2-mod-php5 php5-gd php5-json \
                        php5-mysql wget supervisor
 
+# remove default apache page
+RUN rm /var/www/html/index.html
+
+# deploy piwik
 RUN cd /var/www/html && \
-    wget http://builds.piwik.org/piwik-2.9.0.tar.gz && \
-    tar -xzf piwik-2.9.0.tar.gz && \
-    rm piwik-2.9.0.tar.gz && \
-    mv piwik/* . && \
-    rm -r piwik && \
-    chmod a+w /var/www/html/tmp && \
-    chmod a+w /var/www/html/config && \
-    rm /var/www/html/index.html
+    wget http://builds.piwik.org/piwik-2.10.0.tar.gz && \
+    tar --strip-components=1 -zxvf piwik-2.10.0.tar.gz && \
+    rm piwik-2.10.0.tar.gz 
+
+# set permissions for piwik
+RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 80 3306
 ADD scripts /scripts
