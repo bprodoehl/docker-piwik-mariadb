@@ -1,7 +1,6 @@
 # docker-piwik-mariadb
 
-A Dockerfile that produces a container that will run [Piwik][piwik] and [MariaDB][mariadb] 5.5,
-a drop-in replacement for MySQL.
+A Dockerfile that produces a container that will run [Piwik][piwik] and [MariaDB][mariadb] 5.5, a drop-in replacement for MySQL.
 
 [piwik]: https://piwik.org/
 [mariadb]: https://mariadb.org/
@@ -34,7 +33,7 @@ You can map the container's `/data` volume to a volume on the host so the data
 becomes independant of the running container.
 
 This example uses `/tmp/mariadb` to store the MariaDB data, but you can modify
-this to your needs.
+this to your needs. It also maps the config of piwik to `/tmp/piwik`.
 
 When the container runs, it creates a superuser with a random password.  You
 can set the username and password for the superuser by setting the container's
@@ -46,6 +45,7 @@ mariadb`.
 $ mkdir -p /tmp/mariadb
 $ docker run -d -name="piwik" \
              -v /tmp/mariadb:/data \
+             -v /tmp/piwik:/config \
              -e USER="super" \
              -e PASS="$(pwgen -s -1 16)" \
              myusername/piwik
@@ -85,10 +85,17 @@ Starting MariaDB...
 
 The MARIADB_USER and MARIADB_PASS fields will be needed when configuring Piwik the first time.
 
-## Changelog
+## Proxy Configuration
 
-* 2014-11-13: Updated to Piwik 2.9.0
-* 2014-10-27: Updated to Piwik 2.8.3
-* 2014-10-17: Updated to Piwik 2.8.0
-* 2014-10-08: Updated to Piwik 2.7.0
-* 2014-07-20: Updated to Piwik 2.4.1
+In case you run Piwik behind a proxy, add the following options to `config.ini.php`:
+
+```code
+# if setup is https -> proxy -> http
+assume_secure_protocol = 1
+
+# forward proxy name
+proxy_client_headers[] = HTTP_X_FORWARDED_FOR
+proxy_host_headers[] = HTTP_X_FORWARDED_HOST
+```
+
+More information is available at [Piwik](http://piwik.org/faq/how-to-install/faq_98/)

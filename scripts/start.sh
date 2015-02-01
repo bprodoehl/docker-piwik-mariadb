@@ -6,6 +6,7 @@ set -e
 
 
 DATA_DIR=/data
+CONFIG_DIR=/config
 MYSQL_LOG=$DATA_DIR/mysql.log
 
 if [[ -e /firstrun ]]; then
