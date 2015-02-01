@@ -13,6 +13,10 @@ ENV LANG       en_US.UTF-8
 ENV LC_ALL     en_US.UTF-8
 
 ENV DEBIAN_FRONTEND noninteractive
+
+# Ensure the system has the latest patches
+RUN apt-get -y upgrade
+
 # Install MariaDB from repository.
 RUN apt-get -y install software-properties-common python-software-properties && \
     apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db && \
