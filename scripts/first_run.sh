@@ -17,6 +17,22 @@ pre_start_action() {
   # Ensure mysql owns the DATA_DIR
   chown -R mysql $DATA_DIR
   chown root $DATA_DIR/debian*.flag
+
+  # test if CONFIG_DIR exists or has no content
+  if [ ! -d "$CONFIG_DIR" ] || [ ! "$(ls -A $CONFIG_DIR)" ]; then
+    echo "Initializing config directory at $CONFIG_DIR"
+    # move config to /config and link the directory, allows mounting & backup of config
+    mkdir -p $CONFIG_DIR
+    mv /var/www/html/config/* $CONFIG_DIR
+    rm -rf /var/www/html/config/
+    ln -s $CONFIG_DIR /var/www/html
+
+  fi
+
+  # ensure permission
+  chmod 755 $CONFIG_DIR
+  chown -R www-data $CONFIG_DIR
+
 }
 
 post_start_action() {
