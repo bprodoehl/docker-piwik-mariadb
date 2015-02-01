@@ -30,9 +30,6 @@ VOLUME ["/data"]
 # Configure the database to use our data dir.
 RUN sed -i -e 's/^datadir\s*=.*/datadir = \/data/' /etc/mysql/my.cnf
 
-# Configure MariaDB to listen on any address.
-RUN sed -i -e 's/^bind-address/#bind-address/' /etc/mysql/my.cnf
-
 # Install piwik dependencies
 RUN apt-get -y install apache2 libapache2-mod-php5 php5-gd php5-json \
                        php5-mysql wget supervisor
