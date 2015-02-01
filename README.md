@@ -1,7 +1,6 @@
 # docker-piwik-mariadb
 
-A Dockerfile that produces a container that will run [Piwik][piwik] and [MariaDB][mariadb] 5.5,
-a drop-in replacement for MySQL.
+A Dockerfile that produces a container that will run [Piwik][piwik] and [MariaDB][mariadb] 5.5, a drop-in replacement for MySQL.
 
 [piwik]: https://piwik.org/
 [mariadb]: https://mariadb.org/
@@ -85,10 +84,3 @@ Starting MariaDB...
 
 The MARIADB_USER and MARIADB_PASS fields will be needed when configuring Piwik the first time.
 
-## Changelog
-
-* 2014-11-13: Updated to Piwik 2.9.0
-* 2014-10-27: Updated to Piwik 2.8.3
-* 2014-10-17: Updated to Piwik 2.8.0
-* 2014-10-08: Updated to Piwik 2.7.0
-* 2014-07-20: Updated to Piwik 2.4.1
