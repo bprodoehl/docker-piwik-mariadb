@@ -54,4 +54,4 @@ ADD scripts /scripts
 RUN chmod +x /scripts/start.sh
 RUN touch /firstrun
 
-ENTRYPOINT ["/scripts/start.sh"]
+CMD ["/scripts/start.sh"]
